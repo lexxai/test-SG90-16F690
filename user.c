@@ -51,9 +51,9 @@ void InitApp(void)
     IR_IN2_ANS = ANS_DIGITAL;
     
     //IR_OUTPUT
-    IR_OUTPUT_TRIS = TRIS_OUTPUT;
-    IR_OUTPUT = !IR_OUTPUT_ON;
-    IR_OUTPUT_FLUSH;
+    SERVO_OUTPUT_TRIS = TRIS_OUTPUT;
+    SERVO_OUTPUT = !SERVO_OUTPUT_ON;
+    SERVO_OUTPUT_FLUSH;
     
     //LED SIGNAL
     LED_SIGNAL_TRIS = TRIS_OUTPUT;
@@ -109,7 +109,7 @@ void InitApp(void)
     
 #elif (use_IR_IN2_PWM)  
     //PWR 50%
-    IR_OUTPUT_TRIS = TRIS_INPUT; // Disable PWM pin (CCP1)
+    SERVO_OUTPUT_TRIS = TRIS_INPUT; // Disable PWM pin (CCP1)
     //http://www.micro-examples.com/public/microex-navig/doc/097-pwm-calculator.html
     PR2=26;                    // 37037.03704 Hz (Fosc=4Mhz)
     CCPR1L=13;                 // (6 bits) HSbs bits of PWM duty cycle 50% (74074.07408 Hz)
@@ -120,7 +120,7 @@ void InitApp(void)
     T2CONbits.TOUTPS = 0b0000; //TMR2 Output Prescaler 1:1
     T2CONbits.T2CKPS = 0b00;   //TMR2 Clock Prescale 1
     T2CONbits.TMR2ON = 1;      //Enable TMR2
-    IR_OUTPUT_TRIS = TRIS_OUTPUT; // Enable PWM pin (CCP1) // must be by interrupt
+    SERVO_OUTPUT_TRIS = TRIS_OUTPUT; // Enable PWM pin (CCP1) // must be by interrupt
     
     //TIMER1
     TMR1=0;
@@ -148,7 +148,7 @@ void InitApp(void)
     INTCONbits.RABIE=1;  //interrupt on change enable
     INTCONbits.RABIF=0;  //interrupt on change flag clear
     INTCONbits.PEIE=1;   //interrupr enable from pheri
-    INTCONbits.GIE=1 ;   // GLOBAL interrupt enable
+    INTCONbits.GIE=0 ;   // GLOBAL interrupt enable
     
 }
 
@@ -173,7 +173,7 @@ void send2BytesEUSART(unsigned char byte1, unsigned char byte2, bool sync) {
 
 }
 
-void delay_us(int tu) {
+void delay_us(uint16_t tu) {
     TMR1=-tu;
     PIR1bits.TMR1IF=0;
     while(!PIR1bits.TMR1IF);

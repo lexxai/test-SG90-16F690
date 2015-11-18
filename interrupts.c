@@ -146,8 +146,8 @@ void interrupt isr(void) {
 
     if (PIR1bits.CCP1IF) //Captre event of PWM modeule
     {
-        IR_OUTPUT = !IR_OUTPUT; //software toogle of CCP1 Output pin
-        IR_OUTPUT_FLUSH;
+        SERVO_OUTPUT = !SERVO_OUTPUT; //software toogle of CCP1 Output pin
+        SERVO_OUTPUT_FLUSH;
         //TMR1=0x0000;
         PIR1bits.CCP1IF = 0;
     } else if (INTCONbits.T0IF){

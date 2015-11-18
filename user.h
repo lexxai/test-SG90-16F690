@@ -34,11 +34,11 @@ volatile union {
 #define IR_IN2_TRIS TRISBbits.TRISB4
 #define IR_IN2_ANALOG_CHANNEL 10
 
-#define IR_OUTPUT_TRIS TRISCbits.TRISC5
-#define IR_OUTPUT LATPORTC.bits.RC5
-#define IR_OUTPUT_ON  1
-#define IR_OUTPUT_OFF  !IR_OUTPUT_ON
-#define IR_OUTPUT_FLUSH LATPORTC_FLUSH
+#define SERVO_OUTPUT_TRIS TRISCbits.TRISC5
+#define SERVO_OUTPUT LATPORTC.bits.RC5
+#define SERVO_OUTPUT_ON  1
+#define SERVO_OUTPUT_OFF  !SERVO_OUTPUT_ON
+#define SERVO_OUTPUT_FLUSH LATPORTC_FLUSH
 
 #define LED_SIGNAL_TRIS TRISBbits.TRISB6
 #define LED_SIGNAL LATPORTB.bits.RB6
@@ -80,7 +80,7 @@ volatile unsigned char necpoj = 0; /* (necpoj=NEC position )this varible is used
 volatile unsigned char address = 0, notaddress = 0; // these varible are used to store received address
 volatile unsigned char command = 0, notcommand = 0; // these varible are used to store received address
 
-volatile bool timer1ready=true;
+volatile bool timer1ready = true;
 volatile unsigned char counterIOC;
 
 /******************************************************************************/
@@ -95,8 +95,8 @@ volatile unsigned char counterIOC;
 
 /* TODO User level functions prototypes (i.e. InitApp) go here */
 
-void InitApp(void);         /* I/O and Peripheral Initialization */
+void InitApp(void); /* I/O and Peripheral Initialization */
 void sendByteEUSART(unsigned char byte, bool sync);
 void send2BytesEUSART(unsigned char byte1, unsigned char byte2, bool sync);
-void delay_us(int tu);
+void delay_us(uint16_t tu);
 void delay_ms(int t);
